@@ -1,3 +1,5 @@
+import string
+
 """
 CS 196 FA18 HW4
 Prepared by Andrew, Emilio, and Prithvi
@@ -12,8 +14,25 @@ most_common_char
 
 Given an input string s, return the most common character in s.
 """
+
+
 def most_common_char(s):
-	pass
+    dictionary = {}
+    meme = []
+    yikes = list(set(s))
+    for letters in yikes:
+        dictionary[letters] = 0
+    for letters in s:
+        dictionary[letters] += 1
+    dictionary = sorted(dictionary.items(),
+                        reverse=True,
+                        key=lambda x: x[1])
+    for position in range(0, len(dictionary)):
+        meme.append(dictionary[position][0])
+        if position != len(dictionary) - 1:
+            if dictionary[position + 1][1] < dictionary[position][1]:
+                break
+    return meme[0]
 
 
 """
@@ -36,8 +55,24 @@ Example 2:
 	Return:
 		None
 """
+
+
 def alphabet_finder(s):
-	pass
+    alphabet = "abcdefghijklmnopqrstuvwxyz"
+    meme = s.lower()
+    count = 0
+    for letter in meme:
+        if letter in alphabet:
+            alphabet = alphabet.replace(letter, "")
+            if alphabet == "":
+                break
+        count += 1
+    print(alphabet)
+    if alphabet != "":
+        return None
+    else:
+        return s[:count + 1]
+		
 
 
 """
@@ -162,8 +197,25 @@ Example 2:
 		4294967296 ** (1 / 16) (i.e., 4)
 """
 def happy_numbers(n):
-	pass
+    count = 0
+    for i in range(1, n + 1):
+        if is_happy(i):
+            count += 1
+    return count
 
+def is_happy(n):
+	my_list = []
+	while True:
+		str_number = str(n)
+		r = 0
+		for i in str_number:
+			r += (int(i) * int(i))
+		if r == 1:
+			return True
+		elif r in my_list:
+			return False
+		my_list.append(r)
+		n = r
 
 """
 zero_sum_subarray
@@ -194,6 +246,24 @@ Example 2:
 		[1, 2]
 """
 def zero_sum_subarray(arr):
-    pass 
+    # initialize result 
+    max_len = 0
+  
+    # pick a starting point 
+    for i in range(len(arr)): 
+          
+        # initialize sum for every starting point 
+        curr_sum = 0
+        if arr[i] == 0:
+            return (i, i + 1)
+          
+        # try all subarrays starting with 'i' 
+        for j in range(i, len(arr)): 
+          
+            curr_sum += arr[j] 
+  
+            # if curr_sum becomes 0, then update max_len 
+            if curr_sum == 0: 
+                return (i, j)
 
 
